@@ -6,7 +6,7 @@ except ValueError:
     print("You didn't enter an integer")
     exit()
 
-with open('100000 digits of PI.txt') as Pile:
+with open('100000_digits_of_PI.txt') as Pile:
     ''' File contains 100 000 digits of PI,
     credits to: http://www.geom.uiuc.edu/~huberty/math5337/groupe/digits.html
     It's faster than calculating PI every time using e.g. Nilakantha Series '''
