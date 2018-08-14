@@ -24,7 +24,7 @@ def findDigE():
 
     # def BrothersFormulae(steps):
     #     ''' Steps says how deep in calculating this series you will go e.g.
-    # with only 6 steps you have 9 accurate decimal places '''
+    #     with only 6 steps you have 9 accurate decimal places '''
     #     e = 0
     #     for n in range(steps+1):
     #         e += (2*n+2)/math.factorial(2*n+1)
