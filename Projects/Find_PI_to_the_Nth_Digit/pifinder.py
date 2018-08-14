@@ -20,6 +20,7 @@ def findDigPi():
     
      
     # def NilakanthaSeries(iter):
+    #     ''' Iter says how deep in calculating this series you will go e.g. 100 is 50 additions and 50 subtractions, and it returns accurate Pi to 3.14159 '''
     #     Pi = 3
     #     for num in range(2,iter,2):
     #         if (num%4 == 0):
@@ -29,7 +30,6 @@ def findDigPi():
     #     return Pi
         
     # iterations = 100
-    # ''' It says how deep in calculating this series you will go e.g. 100 is 50 additions and 50 subtractions, and it returns accurate Pi to 3.14159 '''
     # Pi = NilakanthaSeries(iterations)
     # Pi = round(Pi, decPlace)
     
