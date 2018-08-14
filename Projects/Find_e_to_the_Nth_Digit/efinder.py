@@ -3,8 +3,7 @@ import math
 def findDigE():
     
     try:
-        decPlace = input("Enter to which decimal place e is going to be
-                         printed. ")
+        decPlace = input("To which decimal place e should be printed: ")
         decPlace = int(decPlace)
     except ValueError:
         print("You didn't enter an integer")

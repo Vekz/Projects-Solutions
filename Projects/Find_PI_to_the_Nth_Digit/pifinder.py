@@ -1,8 +1,7 @@
 def findDigPi():
     
     try:
-        decPlace = input("Enter to which decimal place Pi is going to be
-                         printed. ")
+        decPlace = input("To which decimal place Pi should be printed: ")
         decPlace = int(decPlace)
     except ValueError:
         print("You didn't enter an integer")
@@ -25,8 +24,8 @@ def findDigPi():
      
     # def NilakanthaSeries(iter):
     #     ''' Iter says how deep in calculating this series you will go e.g.
-    #     100 is 50 additions and 50 subtractions, and it returns accurate Pi to
-    #     3.14159 '''
+    #     100 is 50 additions and 50 subtractions, and it returns accurate Pi
+    #     to 3.14159 '''
     #     Pi = 3
     #     for num in range(2,iter,2):
     #         if (num%4 == 0):
