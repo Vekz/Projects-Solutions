@@ -11,6 +11,7 @@ class Calculator(QWidget):
 
         self.history = []
         self.haveCalculationBeenDone = False
+        self.haveBeenCleared = False
         self.initUI()
 
     def initUI(self):
@@ -41,7 +42,7 @@ class Calculator(QWidget):
         clrBtn = QPushButton("Clr", self)
         clrBtn.setShortcut("Ctrl+C")
         clrBtn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        clrBtn.clicked.connect(self.calcScreen.clear)
+        clrBtn.clicked.connect(lambda: self.clearScreen())
         grid.addWidget(clrBtn, 1, 0, 1, 2)
         addBtn = QPushButton("+", self)
         addBtn.setShortcut("+")
@@ -160,6 +161,10 @@ class Calculator(QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
+    def clearScreen(self):
+        self.haveBeenCleared = True
+        self.calcScreen.clear()
+
     def changeText(self):
         """ Adds digit or symbol for calculation in to the QLineEdit widget """
         sender = self.sender()
@@ -168,9 +173,14 @@ class Calculator(QWidget):
         else:
             self.calcScreen.clear()
             self.haveCalculationBeenDone = False
-            lastCalculationResult = self.history[len(self.history)-1].result
-            self.calcScreen.setText(str(lastCalculationResult)
-                                    + self.calcScreen.text() + sender.text())
+            if not self.haveBeenCleared:
+                CalculationResult = self.history[len(self.history)-1].result
+                self.calcScreen.setText(str(CalculationResult)
+                                        + self.calcScreen.text()
+                                        + sender.text())
+            else:
+                self.calcScreen.setText(self.calcScreen.text() + sender.text())
+                self.haveBeenCleared = False
 
     def calculate(self):
         """ Takes string from QLineEdit widget and uses Calculation class to
