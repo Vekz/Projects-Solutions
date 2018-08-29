@@ -173,7 +173,7 @@ class Calculator(QWidget):
         else:
             self.calcScreen.clear()
             self.haveCalculationBeenDone = False
-            if not self.haveBeenCleared:
+            if (not self.haveBeenCleared) and (sender.text() in "+-=/**"):
                 CalculationResult = self.history[len(self.history)-1].result
                 self.calcScreen.setText(str(CalculationResult)
                                         + self.calcScreen.text()
@@ -202,6 +202,8 @@ class Calculator(QWidget):
                                  "Check if your calculations don't"
                                  + " include <b>division by ZERO</b>!",
                                  QMessageBox.Ok, QMessageBox.Ok)
+        except SyntaxError:
+            pass
 
     def showHistory(self, font):
         """ Shows the window with the previous calculations """
@@ -219,7 +221,7 @@ class Calculation():
     def IsValid(self):
         last = self.calc[len(self.calc)-1]
         first = self.calc[0]
-        if (last not in "+-=*/") and (first not in "+-=*/"):
+        if (last not in "+-=*/") and (first not in "+=*/"):
             return True
         else:
             return False
@@ -239,30 +241,37 @@ class History(QWidget):
         self.cornerPos = pos
         self.font = font
         self.history = history
-        self.lineEdits = []
+        self.histBtn = []
         self.initUI()
 
     def initUI(self):
         """ Initialises GUI for the history window """
         vertBox = QVBoxLayout()
-        vertBox.setSpacing(1)
+        vertBox.setSpacing(0)
         vertBox.setContentsMargins(0, 0, 0, 0)
 
         pos = [i for i in range(len(self.history))]
-        for calc, i in zip(self.history, pos):
-            self.lineEdits.append(QLineEdit(self))
-            self.lineEdits[i].setFrame(False)
-            self.lineEdits[i].setReadOnly(True)
-            self.lineEdits[i].setFont(self.font)
-            self.lineEdits[i].setSizePolicy(QSizePolicy.Expanding,
-                                            QSizePolicy.Expanding)
-            self.lineEdits[i].setText(calc.calc + "=" + str(calc.result))
-            vertBox.addWidget(self.lineEdits[i])
+        for cal, i in zip(self.history, pos):
+            text = (cal.calc + "=" + str(cal.result))
+            self.histBtn.append(QPushButton(text, self))
+            self.histBtn[i].setFont(self.font)
+            self.histBtn[i].setSizePolicy(QSizePolicy.Expanding,
+                                          QSizePolicy.Preferred)
+            self.histBtn[i].clicked.connect(lambda: self.returnTheHistory())
+            vertBox.addWidget(self.histBtn[i])
 
         self.setLayout(vertBox)
         self.setWindowTitle("Calculations history")
         self.move(self.cornerPos)
         self.show()
+
+    def returnTheHistory(self):
+        sender = self.sender()
+        text = sender.text()
+        EqPos = text.find("=")  # finds position of "="
+        text = text[:EqPos]
+        cal.calcScreen.setText(text)
+        cal.calculate()
 
 
 if __name__ == '__main__':
